@@ -43,5 +43,18 @@ namespace NumberToWord
       //assert
       Assert.Equal(expectedOutput, output);
     }
+
+    [Fact]
+    public void Convert_Number20to99_SeventySix()
+    {
+      //arrange
+      int testNumber = 76;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "seventy six";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
   }
 }
