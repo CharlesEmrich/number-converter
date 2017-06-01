@@ -18,6 +18,10 @@ namespace NumberToWord.Objects
       {
         {'2',"twenty "}, {'3',"thirty "}, {'4',"forty "}, {'5',"fifty "}, {'6', "sixty "}, {'7',"seventy "}, {'8',"eighty "}, {'9', "ninety "}
       };
+    private Dictionary<char, string> _baseTens = new Dictionary<char, string>
+      {
+        {'0', "hundred"}, {'1',"thousand "}, {'2',"million "}, {'3',"billion "}, {'4',"trillion "}
+      };
     public NumberConverter(int number)
     {
       _number = number;

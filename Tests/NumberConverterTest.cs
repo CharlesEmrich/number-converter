@@ -56,5 +56,31 @@ namespace NumberToWord
       //assert
       Assert.Equal(expectedOutput, output);
     }
+
+    [Fact]
+    public void Convert_Number100to999WithoutTensOrOnes_EightHundred()
+    {
+      //arrange
+      int testNumber = 800;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "eight hundred";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
+    public void Convert_Number100to999_SevenHundredSixtyFive()
+    {
+      //arrange
+      int testNumber = 765;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "seven hundred sixty five";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
   }
 }
