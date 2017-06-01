@@ -16,7 +16,7 @@ namespace NumberToWord.Objects
       };
     private Dictionary<char, string> _tens = new Dictionary<char, string>
       {
-        {'2',"twenty"}, {'3',"thirty"}, {'4',"fourty"}, {'5',"fifty"}, {'6', "sixty"}, {'7',"seventy"}, {'8',"eighty"}, {'9', "ninety"}
+        {'2',"twenty "}, {'3',"thirty "}, {'4',"forty "}, {'5',"fifty "}, {'6', "sixty "}, {'7',"seventy "}, {'8',"eighty "}, {'9', "ninety "}
       };
     public NumberConverter(int number)
     {
@@ -30,10 +30,13 @@ namespace NumberToWord.Objects
 
       for (int i = numberArray.Length - 1; i >= 0; i--) {
         // Console.WriteLine("Number:" + this.GetNumber() + "For loop on i = " + i);
-        if (i == 0 && numberArray[i] == '1') {
+        if (i == 0 && numberArray[i] > '1' && numberArray.Length == 2) {
+          // numberString += _tens[numberArray[i]];
+          numberString = numberString.Insert(0, _tens[numberArray[i]]);
+        } else if (i == 0 && numberArray[i] == '1') {
           numberString = _teens[numberArray[i + 1]];
         } else {
-          numberString = _ones[numberArray[i]];
+          numberString += _ones[numberArray[i]];
         }
       }
       // int reverseI = 0;
