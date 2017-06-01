@@ -95,5 +95,44 @@ namespace NumberToWord
       //assert
       Assert.Equal(expectedOutput, output);
     }
+
+    [Fact]
+    public void Convert_Number1000to9999WithoutHundredsOrTensOrOnes_EightTHousand()
+    {
+      //arrange
+      int testNumber = 8000;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "eight thousand";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
+    public void Convert_Number1000to9999WithATeen_SevenThousandFifteen()
+    {
+      //arrange
+      int testNumber = 7015;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "seven thousand fifteen";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
+    public void Convert_Number1000to9999_SevenThousandThreeHundredSixtyFive()
+    {
+      //arrange
+      int testNumber = 7365;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "seven thousand three hundred sixty five";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
   }
 }

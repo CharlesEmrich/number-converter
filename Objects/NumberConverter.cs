@@ -40,6 +40,7 @@ namespace NumberToWord.Objects
       else
       {
         for (int i = 0; i < numberArray.Length; i++) {
+          //TODO: Find a pattern in Array.Length and the index at which teen-exceptions occur and use that to drive behavior.
           if (numberArray.Length == 3) {
             if (i == 0)
             {
