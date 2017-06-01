@@ -8,7 +8,7 @@ namespace NumberToWord.Objects
     private int _number;
     private Dictionary<char, string> _ones = new Dictionary<char, string>
       {
-        {'0',"zero"}, {'1',"one"}, {'2',"two"}, {'3',"three"}, {'4',"four"}, {'5',"five"}, {'6', "six"}, {'7',"seven"}, {'8',"eight"}, {'9', "nine"}
+        {'0',""}, {'1',"one "}, {'2',"two "}, {'3',"three "}, {'4',"four "}, {'5',"five "}, {'6', "six "}, {'7',"seven "}, {'8',"eight "}, {'9', "nine "}
       };
     private Dictionary<char, string> _teens = new Dictionary<char, string>
       {
@@ -18,9 +18,9 @@ namespace NumberToWord.Objects
       {
         {'2',"twenty "}, {'3',"thirty "}, {'4',"forty "}, {'5',"fifty "}, {'6', "sixty "}, {'7',"seventy "}, {'8',"eighty "}, {'9', "ninety "}
       };
-    private Dictionary<char, string> _baseTens = new Dictionary<char, string>
+    private Dictionary<int, string> _baseTens = new Dictionary<int, string>
       {
-        {'0', "hundred"}, {'1',"thousand "}, {'2',"million "}, {'3',"billion "}, {'4',"trillion "}
+        {0, "hundred "}, {1,"thousand "}, {2,"million "}, {3,"billion "}, {4,"trillion "}
       };
     public NumberConverter(int number)
     {
@@ -31,32 +31,67 @@ namespace NumberToWord.Objects
     {
       string numberString = "";
       char[] numberArray = _number.ToString().ToCharArray();
+      bool isTeen = false;
 
-      for (int i = numberArray.Length - 1; i >= 0; i--) {
-        // Console.WriteLine("Number:" + this.GetNumber() + "For loop on i = " + i);
-        if (i == 0 && numberArray[i] > '1' && numberArray.Length == 2) {
-          // numberString += _tens[numberArray[i]];
-          numberString = numberString.Insert(0, _tens[numberArray[i]]);
-        } else if (i == 0 && numberArray[i] == '1') {
-          numberString = _teens[numberArray[i + 1]];
-        } else {
-          numberString += _ones[numberArray[i]];
+      if (_number == 0)
+      {
+        return "zero";
+      }
+      else
+      {
+        for (int i = 0; i < numberArray.Length; i++) {
+          if (numberArray.Length == 3) {
+            if (i == 0)
+            {
+              numberString += _ones[numberArray[i]] + _baseTens[0];
+            }
+            else if (i == 1 && numberArray[i] == '1')
+            {
+              isTeen = true;
+            }
+            else if (i == 1 && numberArray[i] > '1')
+            {
+              numberString += _tens[numberArray[i]];
+            }
+            else if (i == 2)
+            {
+              if (isTeen)
+              {
+                numberString += _teens[numberArray[i]];
+              } else {
+                numberString += _ones[numberArray[i]];
+              }
+              isTeen = false;
+            }
+          }
+          else if (numberArray.Length == 2)
+          {
+            if (i == 0 && numberArray[i] == '1')
+            {
+              isTeen = true;
+            }
+            else if (i == 0 && numberArray[i] > '1')
+            {
+              numberString += _tens[numberArray[i]];
+            }
+            else if (i == 1)
+            {
+              if (isTeen)
+              {
+                numberString += _teens[numberArray[i]];
+              } else {
+                numberString += _ones[numberArray[i]];
+              }
+              isTeen = false;
+            }
+          }
+          else if (numberArray.Length == 1)
+          {
+            numberString += _ones[numberArray[i]];
+          }
         }
       }
-      // int reverseI = 0;
-      // for (int i = numberArray.Length - 1; i >= 0; i--) {
-      //   if ((numberArray.Length - (reverseI + 1)) % 3 == 0 && numberArray[i - 1] == 1)
-      //   {
-      //     numberString = _teens[numberArray[i]];
-      //     // i--;
-      //   }
-      //   else
-      //   {
-      //     numberString = _ones[numberArray[i]];
-      //   }
-      //   reverseI ++;
-      // }
-      return numberString;
+      return numberString.Trim();
     }
 
     public int GetNumber()

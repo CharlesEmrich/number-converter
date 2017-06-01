@@ -71,6 +71,19 @@ namespace NumberToWord
     }
 
     [Fact]
+    public void Convert_Number100to999WithATeen_SevenHundredFifteen()
+    {
+      //arrange
+      int testNumber = 715;
+      NumberConverter test = new NumberConverter(testNumber);
+      string expectedOutput = "seven hundred fifteen";
+      //act
+      string output = test.Convert();
+      //assert
+      Assert.Equal(expectedOutput, output);
+    }
+
+    [Fact]
     public void Convert_Number100to999_SevenHundredSixtyFive()
     {
       //arrange
