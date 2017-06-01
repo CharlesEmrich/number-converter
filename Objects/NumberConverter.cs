@@ -32,6 +32,7 @@ namespace NumberToWord.Objects
       string numberString = "";
       char[] numberArray = _number.ToString().ToCharArray();
       bool isTeen = false;
+      int counter = 0;
 
       if (_number == 0)
       {
@@ -39,57 +40,66 @@ namespace NumberToWord.Objects
       }
       else
       {
-        for (int i = 0; i < numberArray.Length; i++) {
-          //TODO: Find a pattern in Array.Length and the index at which teen-exceptions occur and use that to drive behavior.
-          if (numberArray.Length == 3) {
-            if (i == 0)
-            {
-              numberString += _ones[numberArray[i]] + _baseTens[0];
-            }
-            else if (i == 1 && numberArray[i] == '1')
-            {
-              isTeen = true;
-            }
-            else if (i == 1 && numberArray[i] > '1')
-            {
-              numberString += _tens[numberArray[i]];
-            }
-            else if (i == 2)
-            {
-              if (isTeen)
+        for (int j = numberArray.Length - 1; j >= 0; j -= 3) {
+          for (int i = 0; i < numberArray.Length; i++) {
+            //TODO: Find a pattern in Array.Length and the index at which teen-exceptions occur and use that to drive behavior.
+            //TODO: Check length of chunk to branch the logic below. This probably involves mod. We know there are Math.Floor(array.length/3) chunks of length three and one chunk of array.Length % 3. We can tell whether we're looking at one or the other by comparing numberOfChunksLengthThree against counter.
+            //NOTE: REverse the chunk no matter what. Doing so will ensure that the tens are always at index 1.
+            if (numberArray.Length == 3) {
+              if (i == 0)
               {
-                numberString += _teens[numberArray[i]];
-              } else {
-                numberString += _ones[numberArray[i]];
+                numberString += _ones[numberArray[i + (3 * counter)]] + _baseTens[0];
               }
-              isTeen = false;
-            }
-          }
-          else if (numberArray.Length == 2)
-          {
-            if (i == 0 && numberArray[i] == '1')
-            {
-              isTeen = true;
-            }
-            else if (i == 0 && numberArray[i] > '1')
-            {
-              numberString += _tens[numberArray[i]];
-            }
-            else if (i == 1)
-            {
-              if (isTeen)
+              else if (i == 1 && numberArray[i + (3 * counter)] == '1')
               {
-                numberString += _teens[numberArray[i]];
-              } else {
-                numberString += _ones[numberArray[i]];
+                isTeen = true;
               }
-              isTeen = false;
+              else if (i == 1 && numberArray[i + (3 * counter)] > '1')
+              {
+                numberString += _tens[numberArray[i + (3 * counter)]];
+              }
+              else if (i == 2)
+              {
+                if (isTeen)
+                {
+                  numberString += _teens[numberArray[i + (3 * counter)]];
+                } else {
+                  numberString += _ones[numberArray[i + (3 * counter)]];
+                }
+                isTeen = false;
+              }
+            }
+            else if (numberArray.Length == 2)
+            {
+              if (i == 0 && numberArray[i + (3 * counter)] == '1')
+              {
+                isTeen = true;
+              }
+              else if (i == 0 && numberArray[i + (3 * counter)] > '1')
+              {
+                numberString += _tens[numberArray[i + (3 * counter)]];
+              }
+              else if (i == 1)
+              {
+                if (isTeen)
+                {
+                  numberString += _teens[numberArray[i + (3 * counter)]];
+                } else {
+                  numberString += _ones[numberArray[i + (3 * counter)]];
+                }
+                isTeen = false;
+              }
+            }
+            else if (numberArray.Length == 1)
+            {
+              numberString += _ones[numberArray[i + (3 * counter)]];
             }
           }
-          else if (numberArray.Length == 1)
+          if (j < numberArray.Length - 1)
           {
-            numberString += _ones[numberArray[i]];
+            numberString += _baseTens[counter];
           }
+          counter ++;
         }
       }
       return numberString.Trim();
