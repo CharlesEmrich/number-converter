@@ -7,7 +7,7 @@ namespace NumberToWord.Objects
     private int _number;
     private Dictionary<int, string> _ones = new Dictionary<int, string>
       {
-
+        {0,"zero"}, {1,"one"}, {2,"two"}, {3,"three"}, {4,"four"}, {5,"five"}, {6, "six"}, {7,"seven"}, {8,"eight"}, {9, "nine"}
       };
 
     public NumberConverter(int number)
@@ -17,7 +17,7 @@ namespace NumberToWord.Objects
 
     public string Convert()
     {
-      return "ugh";
+      return _ones[_number];
     }
 
     public int GetNumber()
